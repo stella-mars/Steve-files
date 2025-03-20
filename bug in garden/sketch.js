@@ -1,11 +1,3 @@
-// let lxo = 0;
-// let lyo = 0;
-// let counter = 0
-
-
-// let ladybugArr = new Array (400)
-
-// let wormArr = new Array (400);
 
 let lx = new Array ()
 let ly = new Array();
@@ -23,15 +15,15 @@ let sc1 = new Array ();
 
 
 
-let ladybugArr = [];  // Array to hold ladybug instances
-let wormArr = [];     // Array to hold worm instances
+let ladybugArr = []; 
+let wormArr = [];     
 
 function setup() {
     createCanvas(500, 500);
     background(255);
 
-    // Create worms (wormArr initialization)
-    for (let i = 0; i < 400; i++) {
+    
+    for (let i = 0; i < 50; i++) {
         let lx = random(width);
         let ly = random(height);
         let rot = random(TWO_PI); 
@@ -45,37 +37,44 @@ function setup() {
 function draw() {
     background(21, 150, 53);
 
-    // Update and display worms (if they exist)
+  
     for (let i = 0; i < wormArr.length; i++) {
         wormArr[i].update();
         wormArr[i].display();
     }
 
-    // Update and display ladybugs (they should move after creation)
-    for (let i = 0; i < ladybugArr.length; i++) {
-        ladybugArr[i].update();
-        ladybugArr[i].display();
-    }
+    
+    // for (let i = 0; i < ladybugArr.length; i++) {
+    //     ladybugArr[i].update();
+    //     ladybugArr[i].display();
+    // }
 }
 
-// Add ladybugs when mouse is pressed
-function mousePressed() {
-    // Only add 5 ladybugs on mouse press for a manageable number
-    for (let i = 0; i < 5; i++) {
-        let lx1 = mouseX;
-        let ly1 = mouseY;
-        let rot1 = random(TWO_PI);  // Random rotation
-        let sc1 = random(0.5, 1.5);
-        let speedX1 = random(-2, 2);
-        let speedY1 = random(-2, 2);
-        ladybugArr.push(new Ladybug(lx1, ly1, rot1, sc1, speedX1, speedY1));
-    }
 
-    // Empty the wormArr to make worms disappear
+function mouseIsPressed() {
+
+    if (mouseIsPressed){
+        for (let i = 0; i < ladybugArr.length; i++) {
+            ladybugArr[i].update();
+            ladybugArr[i].display();
+        }
+        for (let i = 0; i < 5; i++) {
+            let lx1 = mouseX;
+            let ly1 = mouseY;
+            let rot1 = random(TWO_PI);  
+            let sc1 = random(0.5, 1.5);
+            let speedX1 = random(-2, 2);
+            let speedY1 = random(-2, 2);
+            ladybugArr.push(new Ladybug(lx1, ly1, rot1, sc1, speedX1, speedY1));
+        }
+    
+    }
+ 
+   
     wormArr = [];
 }
 
-// Worm class
+
 class Worm {
     constructor(lx, ly, rot, sc, speedX, speedY) {
         this.lx = lx;
@@ -173,7 +172,7 @@ class Worm {
     }
 }
 
-// Ladybug class
+
 class Ladybug {
     constructor(lx1, ly1, rot1, sc1, speedX1, speedY1) {
         this.lx1 = lx1;
@@ -204,7 +203,7 @@ class Ladybug {
         scale(0.5);
 
         this.bug3(-50, 50);
-        this.atennae(-50, 50);
+        this.antennae(-50, 50);
         this.eyes(-50, 50);
         this.dots(-50, 50);
 
