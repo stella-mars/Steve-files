@@ -47,7 +47,7 @@ class Evi{
     display(){
         this.paperShadow();
         this.evi();
-        this.stringLine();
+        // this.stringLine();
         this.Pin();
       
 
@@ -155,7 +155,7 @@ class EviText{
   display(){
   
     this.eviText();
-  
+    this.text();
   }
   
   eviText(){
@@ -166,6 +166,17 @@ class EviText{
     pop();
     
   }
+  text(){
+
+    push();
+    fill(255,0,0);
+    textSize(50);
+    textFont("Georgia");
+    textAlign(CENTER);
+    text("Evidence", 420, 65);
+    pop();
+
+  }
   
 }
 
@@ -174,7 +185,7 @@ class Sun{
   display(){
   
     this.sun();
-  
+   
   }
   
   sun(){
@@ -185,13 +196,14 @@ class Sun{
     pop();
     
   }
-  
+
+ 
 }
 
 class Windows {
     display() {
       this.window();
-      this.Sun();
+      // this.Sun();
     }
   
     window() {
@@ -201,8 +213,8 @@ class Windows {
         width / 200, height / 200, width / 200, height / 2 + 200
       );
   
-      gradient.addColorStop(0, color(70, 172, 250));
-      gradient.addColorStop(1, color(207, 234, 255));
+      gradient.addColorStop(0, color(78, 82, 102));
+      gradient.addColorStop(1, color(178, 180, 191));
   
       drawingContext.fillStyle = gradient;
       rect(770, 20, 320, 520);
@@ -256,11 +268,13 @@ class GradBack {
         width / 200, height / 200, width / 200, height / 2 + 200
       );
   
-      gradient.addColorStop(0, color(148, 6, 67));
-      gradient.addColorStop(1, color(184, 162, 152));
+      gradient.addColorStop(0, color(82, 37, 6));
+      gradient.addColorStop(1, color(120, 83, 58));
   
       drawingContext.fillStyle = gradient;
       rect(0, 0, 1100, 600);
+
+ 
     }
   }
 
@@ -338,16 +352,111 @@ moon(){
   }
 
 
-  class Cat {
-    display(){
-        this.cat();
-    }
-    
-    cat(){
-        push();
-        fill(255, 0, 0);
-        ellipse(160, 480, 200, 120);
-        pop();
-    }
+ class Overlay{
+  
+  display(){
+  
+    this.overlay();
   
   }
+  
+  overlay(){
+    
+    push();
+    let gradient = drawingContext.createLinearGradient(
+      width / 200, height / 200, width / 200, height / 2 + 200
+    );
+
+    gradient.addColorStop(0, color(6, 0, 181,100));
+    gradient.addColorStop(1, color(81, 51, 145,100));
+
+    drawingContext.fillStyle = gradient;
+    rect(0, 0, 1100, 600);
+    pop();
+  }
+}
+
+
+//////WEATHER CLOUDS/////
+
+
+
+class Cloud {
+  constructor(x, y, spacing, dia, speed = 1, bounds = {xMin: 770, xMax: 1090, yMin: 20, yMax: 540}) {
+    this.x = constrain(x, bounds.xMin, bounds.xMax);
+    this.y = constrain(y, bounds.yMin, bounds.yMax);
+    this.spacing = spacing;
+    this.dia = dia;
+    this.speed = speed;
+    this.bounds = bounds;
+
+    let greyVal = random(150, 255);  
+    this.color = color(greyVal, greyVal, greyVal);  
+  }
+
+  update() {
+    this.x += this.speed;
+
+    if (this.speed > 0 && this.x - this.spacing > this.bounds.xMax) {
+      this.x = this.bounds.xMin - this.spacing * 2;
+    } else if (this.speed < 0 && this.x + this.spacing < this.bounds.xMin) {
+      this.x = this.bounds.xMax + this.spacing * 2;
+    }
+  }
+
+  display() {
+    push();
+    drawingContext.save();
+    drawingContext.beginPath();
+    drawingContext.rect(this.bounds.xMin, this.bounds.yMin, this.bounds.xMax - this.bounds.xMin, this.bounds.yMax - this.bounds.yMin);
+    drawingContext.clip();
+
+    translate(this.x, this.y);
+    noStroke();
+    fill(this.color);  // Use the pre-generated fill color
+    circle(0, 0, this.dia);
+    circle(-this.spacing, 0, this.dia);
+    circle(this.spacing, 0, this.dia);
+    circle(0, -this.spacing, this.dia);
+
+    drawingContext.restore();
+    pop();
+  }
+}
+
+
+
+class Raindrop {
+  constructor(x, y, speed = random(4, 8)) {
+    this.x = x;
+    this.y = y;
+    this.length = random(10, 20);
+    this.speed = speed;
+  }
+
+  update() {
+    this.y += this.speed;
+    if (this.y > height) {
+      this.y = random(-100, -10);
+      this.x = random(770, 1090); 
+    }
+  }
+
+  display() {
+    push();
+    drawingContext.save();
+    drawingContext.beginPath();
+    drawingContext.rect(770, 20, 320, 520);  // Match the window bounds
+    drawingContext.clip();
+  
+    stroke(136, 171, 209);
+    strokeWeight(3);
+    line(this.x, this.y, this.x, this.y + this.length);
+  
+    drawingContext.restore();
+    pop();
+  }
+  
+}
+
+
